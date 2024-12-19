@@ -103,6 +103,6 @@ def load_and_process_data():
     # Update destination spreadsheet by appending after last row
     try:
         existing_df = load_the_spreadsheet('배송', dest_sh)
-        update_worksheet(existing_df, final_df, "배송", "데이터 종합의 배송 시트가 업데이트되었습니다.", dest_sh, dest_spread)
+        update_worksheet(existing_df, final_df, "배송", "배송 데이터 업데이트 완료 (4/4)", dest_sh, dest_spread)
     except Exception as e:
         st.error(f"Error updating destination sheet: {str(e)}")

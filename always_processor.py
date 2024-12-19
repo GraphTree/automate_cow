@@ -36,7 +36,7 @@ def process_always_customer(df, sh, spread):
         new_customer_data = new_customer_data.sort_values('고객 이름')
         
         update_worksheet(existing_df, new_customer_data, '고객', 
-                        f'{len(new_customer_data)} new customer records added successfully', sh, spread)
+                        f'{len(new_customer_data)} 명의 고객 데이터 업데이트 완료 (1/4)', sh, spread)
             
     except Exception as e:
         st.error(f"Error processing customer data: {str(e)}")
@@ -109,7 +109,7 @@ def process_always_order(df, sh, spread):
         })
         
         update_worksheet(existing_orders, order_data, '주문', 
-                        'Order data updated successfully', sh, spread)
+                        '주문 데이터 업데이트 완료 (2/4)', sh, spread)
             
     except Exception as e:
         st.error(f"Error processing order data: {str(e)}")
@@ -148,7 +148,7 @@ def process_always_delivery(df, sh, spread):
         })
 
         update_worksheet(existing_deliveries, delivery_data, '배송',
-                        'Delivery data updated successfully', sh, spread)
+                        '배송 데이터 업데이트 완료 (3/4)', sh, spread)
     except Exception as e:
         st.error(f"Error processing delivery data: {str(e)}")
         st.error(f"Full error traceback:\n{traceback.format_exc()}")
