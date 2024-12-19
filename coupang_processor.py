@@ -139,8 +139,8 @@ def process_coupang_delivery(df, sh, spread):
             '배송 주소': df['수취인 주소'],
             '배송 우편번호': df['우편번호'],
             '배송 메시지': df['배송메세지'],
-            '배송 날짜': get_delivery_date(),
-            '해당 배송회차': '',
+            '출고 날짜': get_delivery_date(),
+            '해당 배송회차': '1',
             '방문수령 여부': '',
             '방문수령 날짜': '',
             '수취자 휴대폰': df['수취인전화번호'],
@@ -148,7 +148,6 @@ def process_coupang_delivery(df, sh, spread):
             '수취자 이름': df['수취인이름'],
             '선착불 여부': '',
             '선착불 금액': '',
-            '택배운임 여부': '',
             '기록날짜': pd.to_datetime('now').strftime('%Y-%m-%d %H:%M:%S')
         })
 

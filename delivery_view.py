@@ -21,7 +21,7 @@ def load_and_process_data():
 
     # Load delivery data from source and get latest date
     delivery_columns = ['주문 key', '배송 key', '수취자 이름', '배송 주소', 
-                       '수취자 휴대폰', '수취자 전화번호', '선착불 여부', '배송 메시지', '기록 날짜']
+                       '수취자 휴대폰', '수취자 전화번호', '선착불 여부', '배송 메시지', '기록 날짜', '춝고 날짜', '해당 배송회차']
     delivery_df = source_spread.sheet_to_df(sheet='배송', index=None)[delivery_columns]
     latest_date = delivery_df['기록 날짜'].max()
     delivery_df = delivery_df[delivery_df['기록 날짜'] == latest_date]
@@ -69,7 +69,9 @@ def load_and_process_data():
         '상품옵션명': lambda x: '\n'.join(sorted(list(x))),
         '배송 메시지': 'first',
         '주문 id': 'first',
-        '플랫폼': 'first'
+        '플랫폼': 'first',
+        '출고 날짜': 'first',
+        '해당 배송회차': 'first'
     }).reset_index()
 
     # Create sort code (first letter of each product name)
@@ -93,7 +95,7 @@ def load_and_process_data():
     result_columns = [
         '배송 key', '주문 key', '고객 key', '수취자 이름', '고객 이름', '배송 주소', 
         '수취자 휴대폰', '수취자 전화번호', '고객 휴대폰', '주문 수량', '선착불 여부', 
-        '상품옵션명', '배송 메시지', '주문 id', '플랫폼', '정렬'
+        '상품옵션명', '배송 메시지', '주문 id', '플랫폼', '정렬', '출고 날짜', '해당 배송회차'
     ]
     
     final_df = grouped.reindex(columns=result_columns)
