@@ -21,7 +21,7 @@ def load_and_process_data():
 
     # Load delivery data from source and get latest date
     delivery_columns = ['주문 key', '배송 key', '수취자 이름', '배송 주소', 
-                       '수취자 휴대폰', '수취자 전화번호', '선착불 여부', '배송 메시지', '기록 날짜', '춝고 날짜', '해당 배송회차']
+                       '수취자 휴대폰', '수취자 전화번호', '선착불 여부', '배송 메시지', '기록 날짜', '출고 날짜', '해당 배송회차']
     delivery_df = source_spread.sheet_to_df(sheet='배송', index=None)[delivery_columns]
     latest_date = delivery_df['기록 날짜'].max()
     delivery_df = delivery_df[delivery_df['기록 날짜'] == latest_date]
