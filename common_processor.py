@@ -81,12 +81,12 @@ def clean_string(value):
 
 
 
-def read_naver_excel(file_path="./cow_file/naver.xlsx", password="1212", sheet_name="발주발송관리", header=1):
+def read_naver_excel(excel_file, password="1212", sheet_name="발주발송관리", header=1):
     """
     Read and decrypt a password-protected Naver Excel file
     
     Args:
-        file_path (str): Path to the Excel file
+        excel_file: Excel file object from file upload
         password (str): Password to decrypt the file
         sheet_name (str): Name of sheet to read
         header (int): Row number to use as column headers (0-indexed)
@@ -95,10 +95,9 @@ def read_naver_excel(file_path="./cow_file/naver.xlsx", password="1212", sheet_n
         pandas.DataFrame: Decrypted Excel data as DataFrame
     """
     decrypted_workbook = io.BytesIO()
-    with open(file_path, 'rb') as file:
-        office_file = msoffcrypto.OfficeFile(file)
-        office_file.load_key(password=password)
-        office_file.decrypt(decrypted_workbook)
+    office_file = msoffcrypto.OfficeFile(excel_file)
+    office_file.load_key(password=password)
+    office_file.decrypt(decrypted_workbook)
 
     return pd.read_excel(decrypted_workbook, sheet_name=sheet_name, header=header)
 

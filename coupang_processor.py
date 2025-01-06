@@ -93,25 +93,24 @@ def process_coupang_order(df, sh, spread):
         
         # Create order data DataFrame with mapped columns
         order_data = pd.DataFrame({
-            '주문 key': df['주문번호'].astype(str) + '_쿠팡',
-            '옵션 key': option_keys,
-            '고객 key': customer_keys,
-            '주문 id': df['주문번호'],
-            '주문 날짜': df['주문일'],
-            '결제 날짜': df['주문일'],
-            '판매금액': df['결제액'],
-            '할인금액': df['옵션ID'].map(discount_mapping),
-            '플랫폼 비용': platform_fee,
-            '정산금액': df['결제액'].apply(safe_convert) - df['옵션ID'].map(discount_mapping).fillna(0) - platform_fee,
-            '배송비': df['배송비'],
-            '주문 수량': df['구매수(수량)'],
+            '주문 key': df['주문번호'].fillna('').astype(str) + '_쿠팡',
+            '옵션 key': option_keys.fillna('').astype(str),
+            '고객 key': customer_keys.fillna('').astype(str),
+            '주문 id': df['주문번호'].fillna('').astype(str),
+            '주문 날짜': df['주문일'].fillna('').astype(str),
+            '결제 날짜': df['주문일'].fillna('').astype(str),
+            '판매금액': df['결제액'].fillna('').astype(str),
+            '할인금액': df['옵션ID'].map(discount_mapping).fillna('').astype(str),
+            '플랫폼 비용': platform_fee.fillna('').astype(str),
+            '정산금액': (df['결제액'].apply(safe_convert) - df['옵션ID'].map(discount_mapping).fillna(0) - platform_fee).fillna('').astype(str),
+            '배송비': df['배송비'].fillna('').astype(str),
+            '주문 수량': df['구매수(수량)'].fillna('').astype(str),
             '사은품': '',
             '주문 총 무게': '',
             '주문 상태': '',
             '플랫폼': '쿠팡',
             '기록날짜': pd.to_datetime('now').strftime('%Y-%m-%d %H:%M:%S')
         })
-        
         update_worksheet(existing_orders, order_data, '주문', 
                         '주문 데이터 업데이트 완료 (2/4)', sh, spread)
             
@@ -134,18 +133,18 @@ def process_coupang_delivery(df, sh, spread):
         
         # Create delivery data DataFrame with one row per order
         delivery_data = pd.DataFrame({
-            '배송 key': df['주문번호'].astype(str).apply(lambda x: f"배송_{x}_쿠팡"),
-            '주문 key': df['주문번호'].astype(str).apply(lambda x: f"{x}_쿠팡"),
-            '배송 주소': df['수취인 주소'],
-            '배송 우편번호': df['우편번호'],
-            '배송 메시지': df['배송메세지'],
+            '배송 key': df['주문번호'].fillna('').astype(str).apply(lambda x: f"배송_{x}_쿠팡"),
+            '주문 key': df['주문번호'].fillna('').astype(str).apply(lambda x: f"{x}_쿠팡"),
+            '배송 주소': df['수취인 주소'].fillna('').astype(str),
+            '배송 우편번호': df['우편번호'].fillna('').astype(str),
+            '배송 메시지': df['배송메세지'].fillna('').astype(str),
             '출고 날짜': get_delivery_date(),
             '해당 배송회차': '1',
             '방문수령 여부': '',
             '방문수령 날짜': '',
-            '수취자 휴대폰': df['수취인전화번호'],
+            '수취자 휴대폰': df['수취인전화번호'].fillna('').astype(str),
             '수취자 전화번호': '', 
-            '수취자 이름': df['수취인이름'],
+            '수취자 이름': df['수취인이름'].fillna('').astype(str),
             '선착불 여부': '',
             '선착불 금액': '',
             '기록날짜': pd.to_datetime('now').strftime('%Y-%m-%d %H:%M:%S')

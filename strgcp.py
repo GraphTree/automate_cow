@@ -51,7 +51,7 @@ if uploaded_file is not None:
             st.session_state.processing_complete = True
             
         elif platform == "네이버/스토어":
-            df = read_naver_excel()
+            df = read_naver_excel(uploaded_file)
             naver_p.process_naver_customer(df, sh, spread)
             naver_p.process_naver_order(df, sh, spread)
             naver_p.process_naver_delivery(df, sh, spread)
