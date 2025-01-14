@@ -131,6 +131,8 @@ def load_and_process_data():
     ordered_delivery_df = grouped_by_fields_df[final_columns]
     ordered_delivery_df['정렬'] = ordered_delivery_df['SKU 이름'].apply(get_sort_code)
     final_delivery_df = ordered_delivery_df.fillna('').replace('nan', '')
+    # Reorder columns to match final_columns list and drop the 'sort' column that was temporarily used
+    final_delivery_df = final_delivery_df[final_columns]
 
     st.write("result_df DataFrame:", final_delivery_df)
 
